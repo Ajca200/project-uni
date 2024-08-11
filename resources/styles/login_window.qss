@@ -1,0 +1,66 @@
+/* styles.qss */
+
+/* Estilo para la ventana principal */
+QMainWindow {
+    background-color: #f0f0f0; /* Color de fondo */
+}
+
+/* Estilo para el widget principal */
+QWidget {
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 10px; /* Espaciado interior */
+}
+
+/* Estilo para etiquetas */
+QLabel {
+    font-size: 14px; /* Tamaño de fuente */
+    color: #2c3e50; /* Color del texto */
+    margin-bottom: -5px;
+}
+
+/* Estilo para entradas de texto */
+QLineEdit {
+    font-size: 14px;
+    padding: 10px; /* Espaciado interior */
+    border: 2px solid #bdc3c7; /* Borde gris */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ecf0f1; /* Fondo gris claro */
+}
+
+QLineEdit:focus {
+    border-color: #3498db; /* Borde azul al tener foco */
+}
+
+/* Estilo para botones */
+QPushButton {
+    background-color: #3498db; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 15px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+QPushButton:hover {
+    background-color: #2980b9; /* Cambio de color al pasar el mouse */
+}
+
+/* Estilo para mensajes emergentes */
+QMessageBox {
+    color: #c0392b; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QMessageBox QPushButton{
+    padding: 10px 15px; /* Espaciado interno */
+}
+
+/* Estilo para enlaces */
+#recovery_password {
+    color: #3498db; /* Color azul para enlaces */
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none; /* Subrayado enlaces */
+}

@@ -1,0 +1,113 @@
+/* styles.qss */
+
+/* Estilo para la ventana principal */
+QMainWindow {
+    background-color: #F0F0F0; /* Fondo gris claro */
+}
+
+#left_widget {
+    background-color: #fff;
+    border: 1px solid #D3D3D3; /* Borde gris claro */
+    border-radius: 10px;
+    width: 70%;
+}
+
+#main {
+    padding: 15px;
+    background-color: #F0F0F0; /* Fondo gris claro */
+}
+
+
+
+/* Estilo para las etiquetas de bienvenida y descripción */
+QLabel {
+    font-size: 18px;
+    color: #333333; /* Color de texto gris oscuro */
+    margin-bottom: 15px;
+}
+
+/* Estilo específico para el mensaje de bienvenida */
+#message_welcome {
+    font-size: 48px;
+    font-weight: bold;
+    color: #000000; /* Color negro */
+    margin-bottom: -10px;
+}
+
+#message_description {
+    font-size: 32px;
+}
+
+/* Estilo para los botones con iconos */
+QToolButton {
+    background-color: #1E90FF; /* Azul */
+    color: #FFFFFF; /* Texto blanco */
+    border: none;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 8px;
+    height: 172px;
+    width: 162px;
+}
+
+QPushButton:hover {
+    background-color: #104E8B; /* Azul más oscuro al pasar el cursor */
+}
+
+QPushButton:pressed {
+    background-color: #1C86EE; /* Azul un poco más claro al presionar */
+}
+
+/* Estilo para el layout de la cuadrícula de botones */
+QGridLayout {
+    spacing: 20px; /* Espaciado entre botones */
+}
+
+/* Estilo para el cuadro de información del administrador */
+QGroupBox {
+    background-color: #FFFFFF; /* Fondo blanco */
+    border: 1px solid #D3D3D3; /* Borde gris claro */
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000; /* Color negro para el título */
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 3px;
+    font-size: 20px;
+    color: #1E90FF; /* Color azul para el título */
+}
+
+/* Estilo para las etiquetas dentro del cuadro de información */
+QLabel {
+    font-size: 16px;
+    color: #333333; /* Color de texto gris oscuro */
+    margin-bottom: 10px;
+}
+
+/* Estilo para la imagen de perfil */
+QLabel#profile_picture {
+    border: 2px solid #D3D3D3; /* Borde gris claro */
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+QCommandLinkButton {
+    background-color: transparent;
+    color: #1E90FF; /* Azul */
+    font-size: 16px;
+    padding: 10px;
+    height: 20px;
+    width:100px;
+}
+
+QCommandLinkButton:hover {
+    color: #104E8B; /* Azul más oscuro al pasar el cursor */
+    background-color:None;
+}
+
