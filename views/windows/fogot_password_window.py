@@ -1,9 +1,12 @@
 import re
 import random
+import os
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QShortcut, QCommandLinkButton)
 from PyQt5.QtGui import QKeySequence, QIntValidator
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
+
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # Local imports
 from utils.window import WindowConfiguration
@@ -46,7 +49,7 @@ class ForgotPasswordWindow(QMainWindow):
         WindowConfiguration.configure(
             self,
             CONFIG["forgot_password_window"]["WINDOW_TITLE"],
-            CONFIG["LOGO_PATH"],
+            os.path.join(PATH, CONFIG["LOGO_PATH"]),
             CONFIG["forgot_password_window"]["WINDOW_X"],
             CONFIG["forgot_password_window"]["WINDOW_Y"],
             CONFIG["forgot_password_window"]["WINDOW_WIDTH"],
@@ -54,7 +57,7 @@ class ForgotPasswordWindow(QMainWindow):
         )
         self.create_widgets()
         self.setup_shortcuts()
-        WindowConfiguration.apply_styles(self, CONFIG["forgot_password_window"]["STYLES_PATH"])
+        WindowConfiguration.apply_styles(self, os.path.join(PATH, CONFIG["forgot_password_window"]["STYLES_PATH"]))
 
     def create_widgets(self):
         main_widget = QWidget()

@@ -1,8 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+import os
 
-DATABASE_URL = "mysql+mysqlconnector://root:admin@localhost/db_escuela"
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Crea la instancia del motor de la base de datos
 engine = create_engine(DATABASE_URL)

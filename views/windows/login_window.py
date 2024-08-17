@@ -1,11 +1,11 @@
 import sys
 import os
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit, QMessageBox, QShortcut)
-from PyQt5.QtGui import QKeySequence, QFont
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtCore import Qt
 
-# Añadir la ruta al sys.path (preferiblemente en el script principal)
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+PATH = os.path.join(os.path.dirname(__file__), '..', '..')
+sys.path.append(PATH)
 
 # Importaciones locales
 from controllers.login_controllers import LoginController
@@ -26,96 +26,108 @@ class LoginWindow(QMainWindow):
     def __init__(self) -> None:
         """ Initialize the application """
         super().__init__()
-        self.init_ui()
+        self._init_ui()
 
-    def init_ui(self) -> None:
+    def _init_ui(self) -> None:
         """ Set up the UI components """
-        WindowConfiguration.configure(self, CONFIG["login_window"]["WINDOW_TITLE"], CONFIG["LOGO_PATH"], CONFIG["login_window"]["WINDOW_X"], CONFIG["login_window"]["WINDOW_Y"], CONFIG["login_window"]["WINDOW_WIDTH"], CONFIG["login_window"]["WINDOW_HEIGHT"])
-        self.create_widgets()
-        self.setup_shortcuts()
-        WindowConfiguration.apply_styles(self, CONFIG["login_window"]["STYLES_PATH"])
+        WindowConfiguration.configure(
+            self, CONFIG["login_window"]["WINDOW_TITLE"],
+            os.path.join(PATH, CONFIG["LOGO_PATH"]), CONFIG["login_window"]["WINDOW_X"],
+            CONFIG["login_window"]["WINDOW_Y"], CONFIG["login_window"]["WINDOW_WIDTH"],
+            CONFIG["login_window"]["WINDOW_HEIGHT"]
+        )
+        self._create_widgets()
+        self._setup_shortcuts()
+        WindowConfiguration.apply_styles(
+            self, os.path.join(PATH, CONFIG["login_window"]["STYLES_PATH"])
+        )
 
-    def create_widgets(self) -> None:
+    def _create_widgets(self) -> None:
         """ Create and arrange the widgets """
         main_widget = QWidget()
         main_layout = QVBoxLayout(main_widget)
 
-        # Add logo
-        logo = ImageLoader(CONFIG["login_window"]["IMAGE_PATH"], CONFIG["login_window"]["IMAGE_SIZE"])
+        logo_path = os.path.join(PATH, CONFIG["login_window"]["IMAGE_PATH"])
+        logo = ImageLoader(logo_path, CONFIG["login_window"]["IMAGE_SIZE"])
         main_layout.addWidget(logo)
 
-        # Add username input
-        username_label = QLabel('Usuario')
-        main_layout.addWidget(username_label)
+        self._add_input_field(main_layout, 'Usuario', 'Ingrese su usuario', 'username_input')
+        self._add_input_field(main_layout, 'Contraseña', 'Ingrese su contraseña', 'password_input', echo_mode=True)
 
-        self.username_input = QLineEdit()
-        self.username_input.setPlaceholderText('Ingrese su usuario')
-        main_layout.addWidget(self.username_input)
-
-        # Add password input
-        password_label = QLabel('Contraseña')
-        main_layout.addWidget(password_label)
-
-        self.password_input = QLineEdit()
-        self.password_input.setEchoMode(QLineEdit.Password)
-        self.password_input.setPlaceholderText('Ingrese su contraseña')
-        main_layout.addWidget(self.password_input)
-
-        # Add login button
         login_button = QPushButton('Acceder')
-        login_button.clicked.connect(self.handle_login)
+        login_button.clicked.connect(self._handle_login)
         main_layout.addWidget(login_button)
 
-        # Add forgot password link
         forgot_password_label = QLabel('<a href="#">¿Ha olvidado su contraseña?</a>')
-        forgot_password_label.linkActivated.connect(self.recovery_password)
+        forgot_password_label.linkActivated.connect(self._recovery_password)
         forgot_password_label.setObjectName('recovery_password')
         main_layout.addWidget(forgot_password_label)
 
         self.setCentralWidget(main_widget)
 
-    def setup_shortcuts(self) -> None:
+    def _add_input_field(self, layout, label_text, placeholder, attribute_name, echo_mode=False):
+        """ Add a label and input field to the layout """
+        label = QLabel(label_text)
+        layout.addWidget(label)
+
+        input_field = QLineEdit()
+        input_field.setPlaceholderText(placeholder)
+        if echo_mode:
+            input_field.setEchoMode(QLineEdit.Password)
+        setattr(self, attribute_name, input_field)
+        layout.addWidget(input_field)
+
+    def _setup_shortcuts(self) -> None:
         """ Setup keyboard shortcuts """
         QShortcut(QKeySequence(Qt.Key_Down), self).activated.connect(lambda: self.password_input.setFocus())
         QShortcut(QKeySequence(Qt.Key_Up), self).activated.connect(lambda: self.username_input.setFocus())
-        QShortcut(QKeySequence(Qt.Key_Return), self).activated.connect(self.handle_login)
+        QShortcut(QKeySequence(Qt.Key_Return), self).activated.connect(self._handle_login)
 
-    def handle_login(self) -> None:
+    def _handle_login(self) -> None:
         """ Handle the login process """
         username = self.username_input.text()
         password = self.password_input.text()
 
-        if not self.validate_inputs(username, password):
+        if not self._validate_inputs(username, password):
             return
 
         try:
             status, level, message = LoginController.authenticate(username, password)
         except Exception as e:
-            QMessageBox.critical(self, 'Error', f'Error inesperado: {str(e)}')
+            self._show_message('Error', f'Error inesperado: {str(e)}', QMessageBox.Critical)
             return
 
+        self._process_login_result(status, level, message)
+
+    def _process_login_result(self, status, level, message) -> None:
+        """ Process the result of the login attempt """
         if status:
-            QMessageBox.information(self, 'Éxito', message)
+            self._show_message('Éxito', message, QMessageBox.Information)
             self.close()
             if level == 'administrador':
                 WindowsControllers.open_admin_window(status)
             else:
                 WindowsControllers.open_teacher_window()
         else:
-            if level == 'warning':
-                QMessageBox.warning(self, 'Error', message)
-            else:
-                QMessageBox.critical(self, 'Error', message)
+            msg_type = QMessageBox.Warning if level == 'warning' else QMessageBox.Critical
+            self._show_message('Error', message, msg_type)
 
-    def validate_inputs(self, username: str, password: str) -> bool:
+    def _validate_inputs(self, username: str, password: str) -> bool:
         """ Validate the inputs """
         if not username or not password:
-            QMessageBox.warning(self, 'Error', 'Por favor ingrese usuario y contraseña.')
+            self._show_message('Error', 'Por favor ingrese usuario y contraseña.', QMessageBox.Warning)
             return False
-        # Add more validation logic if necessary
         return True
 
-    def recovery_password(self) -> None:
+    def _show_message(self, title: str, text: str, icon: QMessageBox.Icon) -> None:
+        """ Show a message box with the specified parameters """
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(icon)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(text)
+        msg_box.exec_()
+
+    def _recovery_password(self) -> None:
         """ Open forgot password window """
         self.close()
         WindowsControllers.open_forgot_password_window()

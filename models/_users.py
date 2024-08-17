@@ -11,6 +11,7 @@ class User(Base):
     phone = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False)
     address = Column(String(50), nullable=False)
+    profile_picture = Column(String(100), nullable=False)
 
     def __repr__(self):
         return f"<User(id='{self.id_user}', name='{self.name} {self.surname}')"

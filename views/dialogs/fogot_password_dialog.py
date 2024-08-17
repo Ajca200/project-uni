@@ -3,6 +3,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtCore import Qt, QTimer, QThread, pyqtSignal
 import random
+import os
+
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # Local imports
 from utils.window import WindowConfiguration
@@ -47,14 +50,14 @@ class ForgotPasswordDialog(QDialog):
         WindowConfiguration.configure(
             self,
             CONFIG["forgot_password_dialog"]["WINDOW_TITLE"],
-            CONFIG["LOGO_PATH"],
+            os.path.join(PATH, CONFIG["LOGO_PATH"]),
             CONFIG["forgot_password_dialog"]["WINDOW_X"],
             CONFIG["forgot_password_dialog"]["WINDOW_Y"],
             CONFIG["forgot_password_dialog"]["WINDOW_WIDTH"],
             CONFIG["forgot_password_dialog"]["WINDOW_HEIGHT"]
         )
         self.create_widgets()
-        WindowConfiguration.apply_styles(self, CONFIG["forgot_password_dialog"]["STYLES_PATH"])
+        WindowConfiguration.apply_styles(self, os.path.join(PATH, CONFIG["forgot_password_dialog"]["STYLES_PATH"]))
 
     def create_widgets(self):
         """ Create and arrange the widgets """

@@ -1,4 +1,4 @@
-from views.windows.admin_window import AdminWindow
+from views.windows.admin_window import AdminDashboard
 from views.windows.teacher_window import TeacherWindow
 
 
@@ -6,7 +6,7 @@ class WindowsControllers:
     @staticmethod
     def open_admin_window(user_id):
         """ Open the admin window """
-        window = AdminWindow(user_id)
+        window = AdminDashboard(user_id)
         window.showMaximized()
 
     @staticmethod
