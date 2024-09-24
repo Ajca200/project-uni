@@ -38,7 +38,7 @@ class LoginController:
     def authenticate(cls, username, password):
         """Autentica el usuario y la contraseña en la base de datos"""
         if not username or not password:
-            return False, 'warning', 'Por favor ingrese usuario y contraseña.'
+            return False, 'warning', 'Por favor ingrese un usuario y contraseña validos.'
 
         try:
             with SessionLocal() as session:
@@ -53,8 +53,8 @@ class LoginController:
     @classmethod
     def forgot_password(cls, user_id, email):
         """Verifica si el correo electrónico existe en la base de datos"""
-        if not email:
-            return False, 'warning', 'Por favor ingrese un correo electrónico.'
+        if not email and not user_id:
+            return False, 'warning', 'Por favor ingrese su cedula y correo electrónico.'
 
         try:
             with SessionLocal() as session:

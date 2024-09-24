@@ -28,3 +28,17 @@ class Student(Base):
 
     def __repr__(self):
         return f"<Student(id='{self.id_student}', name='{self.name}')>"
+    
+class Representante(Base):
+    __tablename__ = "tb_representante"
+
+    id_representante = Column(String(50), primary_key=True)
+    name = Column(String(50), nullable=False)
+    surname = Column(String(50), nullable=False)
+    birthdate = Column(Date, nullable=False)
+    phone = Column(String(20), nullable=False)
+    email = Column(String(100), nullable=True)
+    position = Column(String(50), nullable=False)
+
+    def __repr__(self):
+        return f"<Representante(id='{self.id_representante}', name='{self.name}')>"

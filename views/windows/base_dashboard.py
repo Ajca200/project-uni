@@ -90,6 +90,7 @@ class BaseDashboard(QMainWindow):
 
         self.profile_picture_label = QLabel()
         self.profile_picture_label.setPixmap(QPixmap(os.path.join(PATH, "resources/images/image_none.png")).scaled(300, 300, Qt.KeepAspectRatio))
+        self.load_profile_picture()
 
         lbl_id = QLabel(f'CEDULA: {self.__user_data[0]}')
         lbl_name = QLabel(f"NOMBRE: {self.__user_data[1]}")

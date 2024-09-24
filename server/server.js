@@ -33,14 +33,29 @@ app.post('/upload', upload.single('image'), (req, res) => {
 // Ruta para acceder a las imágenes
 app.get('/image/:filename', (req, res) => {
     const filename = req.params.filename;
-    const filePath = path.join(__dirname, 'uploads', filename);
-    
-    res.sendFile(filePath, (err) => {
-        if (err) {
-            res.status(404).send('Image not found');
-        }
-    });
-});
+    const filenameWithoutExtension = filename.replace(/\.[^/.]+$/, '');
+  
+    const extensions = ['jpeg', 'png'];
+    let filePath = null;
+  
+    for (let i = 0; i < extensions.length; i++) {
+      possiblePath = path.join(__dirname, 'uploads', `${filenameWithoutExtension}.${extensions[i]}`);
+
+      if (fs.existsSync(possiblePath)) {
+        filePath = possiblePath;
+        break;
+        
+        break;
+      }
+    }
+
+    if (filePath){
+        res.sendFile(filePath);
+    }
+    else {
+      res.status(404).send('Image not found');
+    }
+  });
 
 // Servidor escuchando en el puerto definido
 app.listen(PORT, () => {

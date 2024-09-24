@@ -1,10 +1,10 @@
 import os
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QCommandLinkButton,
-    QFrame, QScrollArea, QSizePolicy
+    QFrame, QScrollArea, QSizePolicy, QToolButton
 )
 from PyQt5.QtGui import QIcon, QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 
 from utils.config import CONFIG
 from utils.window import WindowConfiguration
@@ -13,9 +13,10 @@ from utils.window import WindowConfiguration
 PATH = os.path.join(os.path.dirname(__file__), '..', '..')
 
 class BaseGestion(QMainWindow):
-    def __init__(self, config):
+    def __init__(self, config, type):
         super().__init__()
         self.config = config
+        self.type = type
         self.init_UI()
 
     def init_UI(self):
@@ -55,6 +56,7 @@ class BaseGestion(QMainWindow):
 
         # Create and set up the table content area
         self.setup_table_content(main_layout)
+        self.footer(main_layout)
 
         self.setCentralWidget(main_widget)
 
@@ -78,15 +80,15 @@ class BaseGestion(QMainWindow):
         font = QFont()
         font.setBold(True)
 
-        message_welcome = QLabel('GESTION DE ESTUDIANTES')
+        message_welcome = QLabel(f'GESTION DE {self.type.upper()}')
         message_welcome.setAlignment(Qt.AlignCenter)
         message_welcome.setObjectName('message_welcome')
         message_welcome.setFont(font)
         layout.addWidget(message_welcome)
 
         message_description = QLabel(
-            'Bienvenido al centro de gestion estudiantil\n'
-            'Aqui veras todos los estudiantes registrados en el plantel'
+            'Bienvenido al centro de gestion\n'
+            f'Aqui veras todos los {self.type.lower()} registrados en el plantel'
         )
         message_description.setAlignment(Qt.AlignCenter)
         message_description.setFont(font)
@@ -122,6 +124,24 @@ class BaseGestion(QMainWindow):
 
         # Add the table layout to the main layout
         layout.addWidget(table_widget)
+
+    def footer(self, layout):
+        footer_widget = QWidget()
+        footer_layout = QHBoxLayout(footer_widget)
+
+        btn_report = QToolButton()
+        btn_report.setIcon(QIcon(os.path.join(PATH, 'resources/images/descargar.png')))
+        btn_report.setIconSize(QSize(70,70))
+        btn_report.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        footer_layout.addWidget(btn_report)
+
+        btn_add_user = QToolButton()
+        btn_add_user.setIcon(QIcon(os.path.join(PATH, 'resources/images/agregar.png')))
+        btn_add_user.setIconSize(QSize(70,70))
+        btn_add_user.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        footer_layout.addWidget(btn_add_user)
+
+        layout.addWidget(footer_widget)
 
     def add_header(self, layout):
         raise NotImplementedError
