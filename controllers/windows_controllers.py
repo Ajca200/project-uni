@@ -1,5 +1,5 @@
 from views.windows.admin_window import AdminDashboard
-from views.windows.teacher_window import TeacherWindow
+
 
 
 class WindowsControllers:
@@ -11,6 +11,7 @@ class WindowsControllers:
 
     @staticmethod
     def open_teacher_window():
+        from views.windows.teacher_window import TeacherWindow
         """ Open the teacher window """
         window = TeacherWindow()
         window.show()

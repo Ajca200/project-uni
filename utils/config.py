@@ -59,5 +59,15 @@ CONFIG = {
         "WINDOW_Y": 150,
         "WINDOW_WIDTH": 450,
         "WINDOW_HEIGHT": 150
+    },
+    
+    "teachers" :{
+        "WINDOW_TITLE": "Gestion de Profesores",
+        "IMAGE_PATH": "resources/images/logo.png",
+        "STYLES_PATH": "resources/styles/admin_window.qss",
+        "WINDOW_X": 350,
+        "WINDOW_Y": 150,
+        "WINDOW_WIDTH": 450,
+        "WINDOW_HEIGHT": 150
     }
 }
