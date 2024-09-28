@@ -127,6 +127,34 @@ INSERT INTO `tb_students` VALUES ('1234','Luis Adrian','Colemanres Antolinez','2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tb_students`
+--
+
+DROP TABLE IF EXISTS `tb_students`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_students` (
+  `id_student` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `surname` varchar(50) NOT NULL,
+  `birthdate` date NOT NULL,
+  `fk_id_representante` varchar(50) NOT NULL,
+  `fk_id_section` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_student`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_students`
+--
+
+LOCK TABLES `tb_students` WRITE;
+/*!40000 ALTER TABLE `tb_students` DISABLE KEYS */;
+INSERT INTO `tb_students` VALUES ('1234','Luis Adrian','Colemanres Antolinez','2024-01-01','V-14984561','1A'),('2020','Abrahan jose','Colmenares antolinez','2024-01-01','V-14984561','1A'),('2021','yonkleibessor alexander','Colmenares antolinez','2024-01-01','V-14984561','1A');
+/*!40000 ALTER TABLE `tb_students` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tb_users`
 --
 
@@ -166,3 +194,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-08-24 16:09:02
+tb_teachers

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Date
+from sqlalchemy import Column, String, Date, INT
 from models._base import Base
 
 class User(Base):
@@ -42,3 +42,18 @@ class Representante(Base):
 
     def __repr__(self):
         return f"<Representante(id='{self.id_representante}', name='{self.name}')>"
+    #................................................................
+    
+class Teachers (Base):
+    __tablename__ = "tb_teachers"
+    
+    id_teacher = Column( String (50), primary_key=True)
+    name = Column(String(50), nullable=False)
+    surname = Column(String(50), nullable=False)
+    emil = Column (String (50), nullable = False)
+    phone = Column ( INT, nullable= False )
+    
+    def __repr__(self):
+        return f"<Teachers(id='{self.id_teacher}', name='{self.name}')>"
+    
+    

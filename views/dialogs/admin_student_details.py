@@ -60,7 +60,6 @@ class AdminStudentDetailsDialog(QDialog):
         self.profile_picture_label = QLabel()
         self.profile_picture_label.setPixmap(QPixmap(os.path.join(PATH, "resources/images/image_none.png")).scaled(300, 300, Qt.KeepAspectRatio))
         self.load_profile_picture(self._data_student[0])
-
         id = QLabel(f"ID: {self._data_student[0]}")
         name = QLabel(f"Nombre: {self._data_student[1]}")
         surname = QLabel(f"Apellido: {self._data_student[2]}")
